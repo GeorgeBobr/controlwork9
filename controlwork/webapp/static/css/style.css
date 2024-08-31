@@ -1,0 +1,77 @@
+.navbar-nav .nav-item .nav-link {
+    border: 1px solid black;
+    color: black;
+    border-radius: 0;
+    margin-left: -1px;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 0;
+}
+
+.navbar-nav .btn-link {
+    border: 1px solid black;
+    color: black;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}
+
+.btn-group .btn {
+    margin-right: 0;
+}
+
+.btn-primary-custom {
+    border: 5px solid black;
+    color: black;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    text-decoration: none;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.card-img-bottom {
+    max-width: 100%;
+    height: auto;
+}
+
+.btn-primary-custom{
+    border: 1px solid black;
+    color: black;
+    border-radius: 0;
+    margin-left: -1px;
+    padding: 0.5rem 1rem;
+}
+
+.btn-primary-custom,
+.btn-secondary-custom {
+    border: 1px solid black;
+    color: black;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    text-decoration: none;
+    background-color: white;
+}
+
+.btn-primary-custom:hover,
+.btn-secondary-custom:hover {
+    background-color: #e9ecef;
+    color: black;
+}
+
