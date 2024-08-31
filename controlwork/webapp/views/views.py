@@ -1,7 +1,10 @@
-from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, Http404
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 from webapp.models import Photo, Album
 
 
@@ -18,6 +21,31 @@ class PhotoListView(ListView):
 class PhotoDetailView(DetailView):
     model = Photo
     template_name = 'photos/photo_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        photo = self.object
+        context['has_access_token'] = bool(photo.access_token)
+        return context
+
+    @login_required
+    def post(self, request, *args, **kwargs):
+        photo = self.get_object()
+        if request.user == photo.author and not photo.access_token:
+            photo.generate_access_token()
+            return redirect('webapp:photo_detail', pk=photo.pk)
+        return super().post(request, *args, **kwargs)
+
+class PhotoDetailByTokenView(DetailView):
+    model = Photo
+    template_name = 'photos/photo_detail.html'
+
+    def get_object(self, queryset=None):
+        token = self.kwargs.get('token')
+        photo = get_object_or_404(Photo, access_token=token)
+        if not photo.is_public and self.request.user != photo.author:
+            raise Http404("Фото не доступно")
+        return photo
 
 
 class PhotoCreateView(LoginRequiredMixin, CreateView):
@@ -43,7 +71,9 @@ class PhotoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         photo = self.get_object()
-        return self.request.user == photo.author
+        user = self.request.user
+        # Проверка на то, что пользователь является менеджером или автором фотографии
+        return user.is_staff or user == photo.author
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

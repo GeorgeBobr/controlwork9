@@ -33,7 +33,7 @@
                         {% else %}
                             <a href="#" class="btn btn-secondary w-20" style="border-radius: 0" disabled>Просмотр (требуется вход)</a>
                         {% endif %}
-                        {% if user.is_authenticated and user == photo.author %}
+                        {% if user.is_authenticated or user == photo.author %}
                             <a href="{% url 'webapp:photo_edit' photo.pk %}" class="btn btn-warning w-20" style="border-radius: 0">Редактировать</a>
                             <a href="{% url 'webapp:photo_delete' photo.pk %}" class="btn btn-danger w-25" style="border-radius: 0">Удалить</a>
                         {% endif %}
