@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Список фотографий</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 style="text-align: center">Список фотографий</h2>
+    <div class="row">
+        {% for photo in photos %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="photo-container">
+                        <img src="{{ photo.image.url }}" class="card-img-top" alt="Фотография">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ photo.caption }}</h5>
+                        <p class="card-text">Автор: {{ photo.author }}</p>
+                        {% if photo.album %}
+                            <p class="card-text">Альбом: <a href="{% url 'webapp:album_detail' photo.album.pk %}">{{ photo.album.title }}</a></p>
+                        {% else %}
+                            <p class="card-text">Альбом: Не находится в альбоме</p>
+                        {% endif %}
+                        <a href="{% url 'webapp:photo_detail' photo.pk %}" class="btn btn-primary w-20" style="border-radius: 0">Просмотр</a>
+                        {% if request.user == photo.author %}
+                            <a href="{% url 'webapp:photo_edit' photo.pk %}" class="btn btn-warning w-20" style="border-radius: 0">Редактировать</a>
+                            <a href="{% url 'webapp:photo_delete' photo.pk %}" class="btn btn-danger w-25" style="border-radius: 0">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <h3 style="text-align: center">Фотографии не найдены.</h3>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .photo-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .photo-container img {
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+{% endblock %}
