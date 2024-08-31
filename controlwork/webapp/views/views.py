@@ -1,7 +1,9 @@
+from django.http import JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from webapp.models import Photo
+from webapp.models import Photo, Album
+
 
 class PhotoListView(ListView):
     model = Photo
@@ -28,6 +30,11 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['albums'] = Album.objects.all()
+        return context
+
 
 class PhotoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Photo
@@ -39,6 +46,11 @@ class PhotoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         photo = self.get_object()
         return self.request.user == photo.author
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['albums'] = Album.objects.all()
+        return context
+
 
 class PhotoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Photo
@@ -48,3 +60,4 @@ class PhotoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         photo = self.get_object()
         return self.request.user == photo.author
+
