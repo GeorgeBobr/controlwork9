@@ -16,9 +16,15 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ photo.caption }}</h5>
-                        <p class="card-text">Автор: {{ photo.author }}</p>
+                        <p class="card-text">
+                            Автор:
+                            <a href="{% url 'accounts:profile' photo.author.pk %}">{{ photo.author }}</a>
+                        </p>
                         {% if photo.album %}
-                            <p class="card-text">Альбом: <a href="{% url 'webapp:album_detail' photo.album.pk %}">{{ photo.album.title }}</a></p>
+                            <p class="card-text">
+                                Альбом:
+                                <a href="{% url 'webapp:album_detail' photo.album.pk %}">{{ photo.album.title }}</a>
+                            </p>
                         {% else %}
                             <p class="card-text">Альбом: Не находится в альбоме</p>
                         {% endif %}
