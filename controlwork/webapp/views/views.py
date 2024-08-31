@@ -72,7 +72,6 @@ class PhotoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         photo = self.get_object()
         user = self.request.user
-        # Проверка на то, что пользователь является менеджером или автором фотографии
         return user.is_staff or user == photo.author
 
     def get_context_data(self, **kwargs):
