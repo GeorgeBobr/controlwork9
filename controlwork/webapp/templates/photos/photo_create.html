@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Создание фотографии</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="card" style="width: 100%; max-width: 600px;">
+        <div class="card-body">
+            <h2 class="card-title mb-4 text-center">Создание фотографии</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="image" class="form-label">Выберите изображение:</label>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="caption" name="caption" class="form-control" placeholder="Подпись" required>
+                </div>
+                <div class="mb-3">
+                    <label for="album" class="form-label">Выберите альбом:</label>
+                    <select id="album" name="album" class="form-control">
+                        <option value="">Не в альбоме</option>
+                        {% for album in albums %}
+                            <option value="{{ album.id }}">{{ album.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <label for="is_public" class="form-check-label">Сделать публичным</label>
+                        <input type="checkbox" id="is_public" name="is_public" class="form-check-input">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-success mt-2 w-100" style="border-radius: 0">Создать</button>
+                    <a href="{% url 'webapp:photo_list' %}" class="btn btn-secondary mt-2 w-100" style="border-radius: 0">Назад</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
