@@ -8,7 +8,7 @@ class Album(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=True)
-    favorited_by = models.ManyToManyField(User, related_name='favorite_albums', blank=True)
+    favorited_by = models.ManyToManyField(User, related_name='favorited_albums', blank=True)
 
     def __str__(self):
         return self.title
@@ -21,7 +21,7 @@ class Photo(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True)
     is_public = models.BooleanField(default=True)
     access_token = models.CharField(max_length=255, blank=True, null=True, unique=True)
-    favorited_by = models.ManyToManyField(User, related_name='favorite_photos', blank=True)
+    favorited_by = models.ManyToManyField(User, related_name='favorited_photos', blank=True)
 
     def __str__(self):
         return self.caption
