@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ user_obj.profile.first_name }} {{ user_obj.profile.last_name }} - Профиль</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="text-center">
+        <h1>{{ user_obj.profile.first_name }} {{ user_obj.profile.last_name }}</h1>
+        <hr class="my-4">
+    </div>
+    <div class="text-center mb-4">
+        <button class="btn btn-primary" onclick="showSection('public_photos')">Публичные фотографии</button>
+        <button class="btn btn-primary" onclick="showSection('public_albums')">Публичные альбомы</button>
+        {% if request.user == user_obj %}
+            <button class="btn btn-primary" onclick="showSection('private_photos')">Приватные фотографии</button>
+            <button class="btn btn-primary" onclick="showSection('private_albums')">Приватные альбомы</button>
+            <button class="btn btn-primary" onclick="showSection('favorites')">Избранное</button>
+        {% endif %}
+    </div>
+
+    <div id="public_albums" class="section">
+        <ul>
+            {% for album in public_albums %}
+                <li>
+                    <a href="{% url 'webapp:album_detail' album.id %}">{{ album.title }}</a>
+                </li>
+            {% empty %}
+                <h2 style="text-align: center">Нет публичных альбомов.</h2>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="public_photos" class="section" style="display:none;">
+        <div class="row">
+            {% for photo in public_photos %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="photo-container">
+                            <img src="{{ photo.image.url }}" class="card-img-top fixed-img" alt="{{ photo.caption }}">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ photo.caption }}</h5>
+                            <a href="{% url 'webapp:photo_detail' photo.pk %}" class="btn btn-primary">Просмотр</a>
+                            {% if request.user == photo.author %}
+                                <a href="{% url 'webapp:photo_edit' photo.pk %}" class="btn btn-warning">Редактировать</a>
+                                <form action="{% url 'webapp:photo_delete' photo.pk %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h2 style="text-align: center">Нет публичных фотографий.</h2>
+            {% endfor %}
+        </div>
+    </div>
+    {% if request.user == user_obj %}
+        <div id="private_albums" class="section" style="display:none;">
+            <ul>
+                {% for album in private_albums %}
+                    <li>
+                        <a href="{% url 'webapp:album_detail' album.id %}">{{ album.title }}</a>
+                    </li>
+                {% empty %}
+                    <h2 style="text-align: center">Нет приватных альбомов.</h2>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="private_photos" class="section" style="display:none;">
+            <div class="row">
+                {% for photo in private_photos %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="photo-container">
+                                <img src="{{ photo.image.url }}" class="card-img-top fixed-img" alt="{{ photo.caption }}">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ photo.caption }}</h5>
+                                <a href="{% url 'webapp:photo_detail' photo.pk %}" class="btn btn-primary">Просмотр</a>
+                                <a href="{% url 'webapp:photo_edit' photo.pk %}" class="btn btn-warning">Редактировать</a>
+                                <form action="{% url 'webapp:photo_delete' photo.pk %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h2 style="text-align: center">Нет приватных фотографий.</h2>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="favorites" class="section" style="display:none;">
+            <h3>Избранные альбомы</h3>
+            <ul>
+                {% for album in favorite_albums %}
+                    <li>
+                        <a href="{% url 'webapp:album_detail' album.id %}">{{ album.title }}</a>
+                    </li>
+                {% empty %}
+                    <li>Нет избранных альбомов.</li>
+                {% endfor %}
+            </ul>
+            <h3>Избранные фотографии</h3>
+            <div class="row">
+                {% for photo in favorite_photos %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="photo-container">
+                                <img src="{{ photo.image.url }}" class="card-img-top fixed-img" alt="{{ photo.caption }}">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ photo.caption }}</h5>
+                                <a href="{% url 'webapp:photo_detail' photo.pk %}" class="btn btn-primary">Просмотр</a>
+                                {% if request.user == photo.author %}
+                                    <a href="{% url 'webapp:photo_edit' photo.pk %}" class="btn btn-warning">Редактировать</a>
+                                    <form action="{% url 'webapp:photo_delete' photo.pk %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Нет избранных фотографий.</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+function showSection(sectionId) {
+    document.querySelectorAll('.section').forEach(function(section) {
+        section.style.display = 'none';
+    });
+    document.getElementById(sectionId).style.display = 'block';
+}
+</script>
+
+<style>
+    .photo-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .photo-container img {
+        width: auto;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .card-body a,
+    .card-body form {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .card-body .btn {
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .card-body .btn-primary {
+        margin-bottom: 5px;
+    }
+
+    .card-body .btn-warning {
+        margin-bottom: 5px;
+    }
+
+    .card-body .btn-danger {
+        margin-bottom: 5px;
+    }
+</style>
+{% endblock %}
