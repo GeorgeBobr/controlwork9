@@ -1,0 +1,186 @@
+[
+{
+  "model": "auth.group",
+  "pk": 1,
+  "fields": {
+    "name": "Manager",
+    "permissions": [
+      [
+        "add_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "change_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "delete_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "view_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "add_photo",
+        "webapp",
+        "photo"
+      ],
+      [
+        "change_photo",
+        "webapp",
+        "photo"
+      ],
+      [
+        "delete_photo",
+        "webapp",
+        "photo"
+      ],
+      [
+        "view_photo",
+        "webapp",
+        "photo"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$mgIGK8zhaIxNmt7dfAsX1C$sdLY/0jOF+eX4kvMhwrMrK9t0tQ3uRF0KARija1fZwE=",
+    "last_login": "2024-08-31T12:40:20.504Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2024-08-31T05:18:00.928Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$W2IBRj3ifbUJAvKMCGVmP4$BITWN12cNiZErD+stIdx8kyeeVo9i6wd8FKks89RVxI=",
+    "last_login": "2024-08-31T06:46:06.447Z",
+    "is_superuser": false,
+    "username": "Pizdaliz",
+    "first_name": "Paul",
+    "last_name": "Hitler",
+    "email": "polpot@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-08-31T06:19:13.695Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "",
+    "last_login": "2024-08-31T06:35:00.822Z",
+    "is_superuser": false,
+    "username": "qwerty",
+    "first_name": "qwerty",
+    "last_name": "qwerty",
+    "email": "qwerty@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-08-31T06:35:00.797Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "",
+    "last_login": "2024-08-31T12:31:57.786Z",
+    "is_superuser": false,
+    "username": "Huesos",
+    "first_name": "Pol",
+    "last_name": "Pot",
+    "email": "11111@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-08-31T12:31:57.763Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$pU66HWTWz5g60WyrX4GE49$d0Y65tfr8c+o27NuapDaKcP0tqdqiFN0J4Jn6H2CBno=",
+    "last_login": "2024-08-31T12:40:07Z",
+    "is_superuser": false,
+    "username": "Вожатый",
+    "first_name": "Дядя",
+    "last_name": "Богдан",
+    "email": "pid@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2024-08-31T12:37:00Z",
+    "groups": [
+      [
+        "Manager"
+      ]
+    ],
+    "user_permissions": [
+      [
+        "add_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "change_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "delete_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "view_album",
+        "webapp",
+        "album"
+      ],
+      [
+        "add_photo",
+        "webapp",
+        "photo"
+      ],
+      [
+        "change_photo",
+        "webapp",
+        "photo"
+      ],
+      [
+        "delete_photo",
+        "webapp",
+        "photo"
+      ],
+      [
+        "view_photo",
+        "webapp",
+        "photo"
+      ]
+    ]
+  }
+}
+]
