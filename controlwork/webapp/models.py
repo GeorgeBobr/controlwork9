@@ -18,7 +18,7 @@ class Photo(models.Model):
     caption = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    album = models.ForeignKey(Album, on_delete=models.SET_NULL, blank=True, null=True)
+    album = models.ForeignKey(Album, on_delete=models.CASCADE, blank=True, null=True)
     is_public = models.BooleanField(default=True)
     access_token = models.CharField(max_length=255, blank=True, null=True, unique=True)
     favorited_by = models.ManyToManyField(User, related_name='favorite_photos', blank=True)
