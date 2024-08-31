@@ -32,9 +32,8 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['albums'] = Album.objects.all()
+        context['albums'] = Album.objects.filter(author=self.request.user)
         return context
-
 
 class PhotoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Photo
